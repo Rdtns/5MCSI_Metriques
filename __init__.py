@@ -41,7 +41,7 @@ def extract_minutes(date_string):
         minutes = date_object.minute
         return jsonify({'minutes': minutes})
 
-# @app.route(/com/")
+# @app.route("/commits/")
 def moncommit():
     return render_template("commits.html")
 
