@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphique des Commits</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <div id="commitsChart" style="width: 800px; height: 400px;"></div>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date');
+            data.addColumn('number', 'Nombre de Commits');
+
+            // Récupérer les données des commits passées depuis Flask
+            var commitsData = {{ commits_data | tojson | safe }};
+
+            // Ajouter les données des commits au tableau
+            commitsData.forEach(function(commit) {
+                data.addRow([commit.commit.author.date, 1]);  // Vous pouvez ajuster les données ici selon vos besoins
+            });
+
+            // Configurer les options du graphique
+            var options = {
+                title: 'Nombre de Commits par Minute',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            // Créer et afficher le graphique
+            var chart = new google.visualization.LineChart(document.getElementById('commitsChart'));
+            chart.draw(data, options);
+        }
+    </script>
+</body>
+</html>
