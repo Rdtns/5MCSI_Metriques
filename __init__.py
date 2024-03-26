@@ -46,23 +46,22 @@ def extract_minutes(date_string):
 def hello_world():
     return render_template('hello.html')
 
-@app.route('/commits/')
+@app.route('/commits')
 def get_commits():
-    # URL de l'API GitHub pour récupérer les commits
+    # URL de l'API GitHub
     url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits'
     
-    try:
-        # Récupération des données depuis l'API GitHub
-        response = urlopen(url)
-        raw_data = response.read()
-        commits_data = json.loads(raw_data)
-
-        # Extraction des informations pertinentes (date et auteur) pour chaque commit
-        commits = [{'date': commit['commit']['author']['date'], 'author': commit['commit']['author']['name']} for commit in commits_data]
-
-        return jsonify({'commits': commits})
-    except Exception as e:
-        return str(e), 500  # Retourne une erreur 500 en cas d'erreur lors de la récupération des données
+    # Effectuer une requête GET à l'API GitHub
+    with urllib.request.urlopen(url) as response:
+        data = response.read()
+    
+    # Convertir les données JSON en Python dict
+    commits_data = json.loads(data)
+    
+    # Extraire la quantité de commits (nombre total de commits)
+    total_commits = len(commits_data)
+    
+    return jsonify({'total_commits': total_commits})
 
 if __name__ == "__main__":
   app.run(debug=True)
