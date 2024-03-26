@@ -46,36 +46,15 @@ def hello_world():
     return render_template('hello.html')
 
 @app.route('/commits/')
-def commits():
-    # Récupérer les données des commits depuis l'API GitHub
-    url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits'
-    response = requests.get(url)
+def get_commits():
+    # Appel à l'API GitHub pour récupérer les données des commits
+    response = requests.get('https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits')
     commits_data = response.json()
-    
-    # Initialiser un dictionnaire pour stocker le nombre de commits par minute
-    commits_per_minute = {}
-    
-    # Parcourir les données des commits
-    for commit in commits_data:
-        # Extraire la date et l'heure du commit
-        commit_date_str = commit['commit']['author']['date']
-        commit_date = datetime.strptime(commit_date_str, '%Y-%m-%dT%H:%M:%SZ')
-        
-        # Récupérer la minute du commit
-        minute = commit_date.minute
-        
-        # Incrémenter le nombre de commits pour cette minute
-        if minute in commits_per_minute:
-            commits_per_minute[minute] += 1
-        else:
-            commits_per_minute[minute] = 1
-    
-    # Convertir le dictionnaire en listes de minutes et de nombre de commits
-    minutes = list(commits_per_minute.keys())
-    commits_count = list(commits_per_minute.values())
-    
-    # Rendre les données disponibles pour le rendu HTML
-    return render_template('commits.html', minutes=minutes, commits_count=commits_count)
+
+    # Traitement des données des commits ici...
+
+    # Rendre le modèle HTML avec les données des commits
+    return render_template('commits_chart.html', commits_data=commits_data)
 
 if __name__ == "__main__":
   app.run(debug=True)
