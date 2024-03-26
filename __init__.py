@@ -52,49 +52,16 @@ def extract_minutes(date_string):
         date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
         minutes = date_object.minute
         return jsonify({'minutes': minutes})
+
 @app.route('/extract-minutes/<date_string>')
 def extract_minutes(date_string):
-    date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
-    minutes = date_object.minute
-    return jsonify({'minutes': minutes})
+        date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
+        minutes = date_object.minute
+        return jsonify({'minutes': minutes})
 
-@app.route('/commits')
-def get_commits():
-    # URL de l'API GitHub pour récupérer les commits
-    url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits'
-    
-    # Effectuer une requête GET à l'API GitHub
-    response = requests.get(url)
-    
-    # Vérifier si la requête a réussi
-    if response.status_code == 200:
-        # Convertir la réponse en format JSON
-        commits_data = response.json()
-        
-        # Traiter les données pour obtenir le nombre de commits par minute
-        commits_per_minute = {}
-        for commit in commits_data:
-            # Extraire la date du commit et le convertir en objet datetime
-            commit_date = datetime.strptime(commit['commit']['author']['date'], '%Y-%m-%dT%H:%M:%SZ')
-            
-            # Extraire la minute du commit
-            minute = commit_date.minute
-            
-            # Mettre à jour le nombre de commits pour cette minute
-            if minute in commits_per_minute:
-                commits_per_minute[minute] += 1
-            else:
-                commits_per_minute[minute] = 1
-        
-        # Retourner les données au format JSON
-        return jsonify(commits_per_minute)
-    else:
-        # Si la requête a échoué, retourner un message d'erreur
-        return jsonify({'error': 'Failed to fetch commits data'})
-
-@app.route('/index/')
-def index():
-    return render_template('index.html')
+@app.route("/commits/")
+def commit():
+    return render_template("commits.html")
   
 if __name__ == "__main__":
   app.run(debug=True)
