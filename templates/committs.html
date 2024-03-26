@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graphique</title>
+    <!-- Inclure Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Créer un élément canvas pour le graphe -->
+    <canvas id="myChart"></canvas>
+
+    <script>
+        // Effectuer une requête AJAX à la route /extract-minutes/<date_string>
+        fetch('/extract-minutes/2024-03-26T12:30:00Z')
+            .then(response => response.json())
+            .then(data => {
+                // Récupérer les données de la réponse
+                const minutes = data.minutes;
+
+                // Dessiner le graphe
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Minutes'],
+                        datasets: [{
+                            label: 'Minutes',
+                            data: [minutes],
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
