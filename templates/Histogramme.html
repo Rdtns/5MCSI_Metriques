@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Évolution des températures de Tawarano</title>
+  <!-- Charger la bibliothèque Google Charts -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Année', 'Température (°C)'],
+        ['2019', 25],
+        ['2020', 26],
+        ['2021', 24],
+        ['2022', 27],
+        // Ajoutez vos données ici
+      ]);
+
+      var options = {
+        title: 'Évolution des températures de Tawarano',
+        legend: { position: 'none' },
+        vAxis: { title: 'Température (°C)' },
+        hAxis: { title: 'Année' },
+        colors: ['#3366CC'], // Couleur des colonnes
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <!-- Div où le graphique sera affiché -->
+  <div id="chart_div" style="width: 900px; height: 500px;"></div>
+</body>
+</html>
