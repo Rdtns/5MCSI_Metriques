@@ -1,7 +1,6 @@
 from flask import Flask, render_template_string, render_template, jsonify
 from flask import render_template
 from flask import json
-from flask import requests
 from datetime import datetime
 from urllib.request import urlopen
 import sqlite3
@@ -41,26 +40,15 @@ def extract_minutes(date_string):
         date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
         minutes = date_object.minute
         return jsonify({'minutes': minutes})
-                                                                                                                               
+
+@app.route("/com/")
+def moncommit():
+    return render_template("commit.html")
+
+                                                                                                                                 
 @app.route('/')
 def hello_world():
     return render_template('hello.html')
-
-@app.route('/extract-minutes/<date_string>')
-def extract_minutes(date_string):
-        date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
-        minutes = date_object.minute
-        return jsonify({'minutes': minutes})
-
-@app.route('/extract-minutes/<date_string>')
-def extract_minutes(date_string):
-        date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
-        minutes = date_object.minute
-        return jsonify({'minutes': minutes})
-
-@app.route("/commits/")
-def commit():
-    return render_template("commits.html")
   
 if __name__ == "__main__":
   app.run(debug=True)
