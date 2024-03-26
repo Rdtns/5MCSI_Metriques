@@ -48,14 +48,21 @@ def hello_world():
 
 @app.route('/commits/')
 def get_commits():
-    # Appel à l'API GitHub pour récupérer les données des commits
-    response = requests.get('https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits')
-    commits_data = response.json()
+    # URL de l'API GitHub pour récupérer les commits
+    url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits'
+    
+    try:
+        # Récupération des données depuis l'API GitHub
+        response = urlopen(url)
+        raw_data = response.read()
+        commits_data = json.loads(raw_data)
 
-    # Traitement des données des commits ici...
+        # Extraction des informations pertinentes (date et auteur) pour chaque commit
+        commits = [{'date': commit['commit']['author']['date'], 'author': commit['commit']['author']['name']} for commit in commits_data]
 
-    # Rendre le modèle HTML avec les données des commits
-    return render_template('commits_chart.html', commits_data=commits_data)
+        return jsonify({'commits': commits})
+    except Exception as e:
+        return str(e), 500  # Retourne une erreur 500 en cas d'erreur lors de la récupération des données
 
 if __name__ == "__main__":
   app.run(debug=True)
