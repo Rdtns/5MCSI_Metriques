@@ -5,6 +5,7 @@ from flask import requests
 from datetime import datetime
 from urllib.request import urlopen
 import sqlite3
+import urlib.request
                                                                                                                                        
 app = Flask(__name__)
 
@@ -52,7 +53,7 @@ def get_commits():
     url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits'
     
     # Effectuer une requête GET à l'API GitHub
-    with urllib.request.urlopen(url) as response:
+    with urlopen(url) as response:
         data = response.read()
     
     # Convertir les données JSON en Python dict
