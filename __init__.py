@@ -25,6 +25,17 @@ def meteo():
 @app.route("/rapport/")
 def mongraphique():
     return render_template("graphique.html")
+
+@app.route('/paris/')
+def meteo_paris():
+    response = requests.get('https://api.openweathermap.org/data/2.5/forecast/daily?q=Paris,fr&cnt=16&appid=YOUR_API_KEY')
+    json_content = response.json()
+    results = []
+    for list_element in json_content.get('list', []):
+        dt_value = list_element.get('dt')
+        temp_day_value = list_element.get('temp', {}).get('day') - 273.15  # Conversion de Kelvin en °C
+        results.append({'Jour': dt_value, 'temp': temp_day_value})
+    return jsonify(results=results)
                                                                                                                                  
 @app.route('/')
 def hello_world():
