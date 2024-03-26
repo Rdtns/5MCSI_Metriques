@@ -18,8 +18,8 @@
             .then(response => response.json())
             .then(data => {
                 // Extraire les labels (minutes) et les données du JSON
-                const labels = data.labels;
-                const commitsData = data.data;
+                const labels = data.minutes.map(item => item.minute);
+                const commitsData = data.commits;
 
                 // Créer le graphique
                 const ctx = document.getElementById('commitChart').getContext('2d');
