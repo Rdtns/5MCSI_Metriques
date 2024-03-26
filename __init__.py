@@ -5,7 +5,6 @@ from flask import requests
 from datetime import datetime
 from urllib.request import urlopen
 import sqlite3
-import urlib.request
                                                                                                                                        
 app = Flask(__name__)
 
