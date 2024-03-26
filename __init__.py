@@ -54,7 +54,7 @@ def extract_minutes(date_string):
         return jsonify({'minutes': minutes})
 @app.route('/commt')
 def indexs():
-    return render_template('commitss.html')
+    return render_template('committs.html')
   
 if __name__ == "__main__":
   app.run(debug=True)
