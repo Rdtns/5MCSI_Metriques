@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commits per Minute</title>
+    <!-- Inclure Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 75%;">
+        <canvas id="commitChart"></canvas>
+    </div>
+
+    <script>
+        // Récupérer les données des commits depuis la route Flask
+        fetch('/commits/')
+            .then(response => response.json())
+            .then(data => {
+                // Extraire les labels (minutes) et les données du JSON
+                const labels = data.labels;
+                const commitsData = data.data;
+
+                // Créer le graphique
+                const ctx = document.getElementById('commitChart').getContext('2d');
+                const commitChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Commits par minute',
+                            data: commitsData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
