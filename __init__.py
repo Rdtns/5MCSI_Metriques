@@ -40,18 +40,7 @@ def extract_minutes(date_string):
         date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
         minutes = date_object.minute
         return jsonify({'minutes': minutes})
-
-@app.route('/commits/')
-def get_commits_data():
-    # Récupérer les données des commits et les formater correctement
-    # Assurez-vous que `commits_data` contient les minutes et le nombre de commits par minute
-    return jsonify(commits_data) 
-
-@app.route("/com/")
-def moncommit():
-    return render_template("commits.html")
-
-                                                                                                                                 
+                                                                                                                               
 @app.route('/')
 def hello_world():
     return render_template('hello.html')
