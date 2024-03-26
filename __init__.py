@@ -28,7 +28,7 @@ def mongraphique():
 
 @app.route('/paris/')
 def meteo_paris():
-    response = requests.get('https://api.openweathermap.org/data/2.5/forecast/daily?q=Paris,fr&cnt=16&appid=YOUR_API_KEY')
+    response = requests.get('https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx')
     json_content = response.json()
     results = []
     for list_element in json_content.get('list', []):
