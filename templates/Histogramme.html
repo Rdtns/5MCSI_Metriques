@@ -26,6 +26,8 @@
         vAxis: { title: 'Température (°C)' },
         hAxis: { title: 'Année' },
         colors: ['#3366CC'], // Couleur des colonnes
+        chartArea: { width: '50%' }, // Ajuster la largeur de la zone de tracé
+        bar: { groupWidth: '50%' } // Ajuster la largeur des colonnes
       };
 
       var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
