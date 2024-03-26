@@ -92,7 +92,7 @@ def get_commits():
         # Si la requête a échoué, retourner un message d'erreur
         return jsonify({'error': 'Failed to fetch commits data'})
 
-@app.route('/')
+@app.route('/index/')
 def index():
     return render_template('index.html')
   
